@@ -1,31 +1,16 @@
-from skimage import feature, io, color
+from skimage import feature
 import numpy as np
 import pandas as pd
 import cv2
 from tqdm import tqdm
 from sklearn.metrics import pairwise_distances
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
 from sklearn.model_selection import train_test_split
 import skimage.measure
-from sklearn.cluster import KMeans
-from sklearn.svm import SVC
-from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import matplotlib.pyplot as plt
-import torch
-from torch.utils.data import DataLoader, TensorDataset
 
 
 # technique 1
 def rgb_histogram(images):
-    # Create empty lists to store the histograms for each channel
-    hist_r_list = []
-    hist_g_list = []
-    hist_b_list = []
 
     histograms = np.zeros((images.shape[0], 3, 256))
 
@@ -50,6 +35,7 @@ def rgb_histogram(images):
             
     return histograms
 
+
 # technique 2
 def gray_reduced_images(images):
     
@@ -66,6 +52,7 @@ def gray_reduced_images(images):
         feature_images[i, :, :, 0] = pooled_image
 
     return feature_images
+
 
 # technique 3
 def lbp(images, radius=3, n_points=8):
@@ -103,6 +90,7 @@ def plot_images(original_image, transformed_images, titles):
 
     plt.show()
 
+
 def grid_search_lbp(images, n_random, radius_values, n_points_values):
     
     # Randomly select 3 images for the grid search
@@ -123,7 +111,8 @@ def grid_search_lbp(images, n_random, radius_values, n_points_values):
         # Plot the original and transformed images
         plot_images(image, transformed_images, titles)
 
-        
+
+# technique 4
 def hcd(images):
 
     # Preallocate the feature_images array
@@ -142,9 +131,8 @@ def hcd(images):
     return feature_images
 
 
-
+# technique 5
 # Oriented FAST and Rotated BRIEF
-
 # function to receive keypoints and descriptors
 def orb_sift(images, method='orb'):
     
@@ -154,7 +142,6 @@ def orb_sift(images, method='orb'):
     
     if method == 'sift':
         obj = cv2.xfeatures2d.SIFT_create()
-
 
     # Initialize lists to store keypoints and descriptors for all images
     all_keypoints = []
@@ -179,7 +166,7 @@ def orb_sift(images, method='orb'):
 
 
 # Quantization and histogram creation
-def histogram_visual_words(kmeans, descriptors, bins = 100, eps=1e-7):
+def histogram_visual_words(kmeans, descriptors, bins=100, eps=1e-7):
     visual_word_histograms = []
     
     for i, image_features in enumerate(tqdm(descriptors)):
@@ -276,7 +263,6 @@ def plot_sh_coeff(overview):
     x_values = overview.index
     silhouette_coeff_values = overview['silhouette_coeff']
     plt.bar(x=x_values, height=silhouette_coeff_values, edgecolor='black')
-
 
     x_labels = [str(i) for i in x_values]
     plt.xticks(x_values, x_labels)

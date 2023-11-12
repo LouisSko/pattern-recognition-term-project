@@ -1,21 +1,12 @@
-from skimage import feature, io, color
 import numpy as np
 import pandas as pd
-import cv2
 from tqdm import tqdm
-from sklearn.metrics import pairwise_distances
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
-import skimage.measure
-from sklearn.cluster import KMeans
-from sklearn.svm import SVC
-from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
+
 
 # check performance over different k's
 def knn_grid_search(list_k, X_train, y_train, X_valid, y_valid):
@@ -41,7 +32,7 @@ def knn_grid_search(list_k, X_train, y_train, X_valid, y_valid):
         acc_valid = metrics.accuracy_score(y_valid, y_pred_valid)
 
         # Store results
-        result_df.loc[k,:] = [acc_train, acc_valid]
+        result_df.loc[k, :] = [acc_train, acc_valid]
     
     result_df = result_df.astype(float)
     best_k = result_df['acc_valid'].idxmax()
@@ -51,7 +42,6 @@ def knn_grid_search(list_k, X_train, y_train, X_valid, y_valid):
     
     print(70 * '-')
     print(f'Best results obtained for k = {best_k}')
-
         
     return result_df, best_k
 
@@ -79,7 +69,7 @@ def knn_train_test(X_train, X_test, y_train, y_test, best_k):
     return knn
 
 
-class DataSplit():
+class DataSplit:
     def __init__(self, test_size):
         self.test_size = test_size
 
@@ -94,7 +84,6 @@ class DataSplit():
         yield train_indices, valid_indices
         
         
-
 def plot_error(result_df):
     # calculate the error as 1-accuracy
     sorted_df = (1-result_df).astype(float).copy()
@@ -155,6 +144,6 @@ def train_tune_test(model, param_grid, X_train, y_train, X_test, y_test, cv=4):
         print(f'accuracy on test set: {np.round(test_acc, 3)}')
         
     except Exception as e:
-            print("An error occurred:", e)
+        print("An error occurred:", e)
             
-    return model 
+    return model

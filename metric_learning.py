@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+
 def plot_loss(train_loss_list, val_loss_list):
     
     plt.plot(train_loss_list, label='Training Loss')

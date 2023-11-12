@@ -1,9 +1,9 @@
 import scipy.io
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 import numpy as np
-import pandas as pd
 import random
+import torch
+
 
 def load_svhn_dataset(train_path, test_path):
     train_data = scipy.io.loadmat(train_path)
@@ -53,7 +53,7 @@ def visualize_class_distr(labels1, labels2, label_names=None):
             axes[1].text(x + 0.5, count / 2, str(int(i)), ha='center', va='center')
 
     # Set the x-axis ticks
-    #plt.xticks(np.arange(1,10))
+    # plt.xticks(np.arange(1,10))
 
     # Show the plot
     plt.show()
@@ -76,8 +76,6 @@ def plot_images(images, labels, rows=3, cols=3):
     plt.tight_layout()  # Ensure proper spacing
     plt.show()
     
-
-
 
 def plot_transformed_images(images, feature_images, indices=None):
     # Set the number of images to display
@@ -109,8 +107,7 @@ def plot_transformed_images(images, feature_images, indices=None):
 
     plt.show()
 
-    
-    
+
 class Standardizer:
     def __init__(self, library='torch'):
         self.library = library
@@ -152,7 +149,7 @@ def create_vectors(images):
     return images.reshape(images.shape[0], -1)
 
 
-def histogram(images, bins = 64, eps=1e-7):
+def histogram(images, bins=64, eps=1e-7):
     
     images = images.reshape(images.shape[0], -1)
     hist = [np.histogram(image, bins=bins)[0] for image in images]
