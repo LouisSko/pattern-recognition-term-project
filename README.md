@@ -6,6 +6,11 @@ This repository contains code and resources for the Phase 1 Term Project of the 
 
 The main project report can be found in `project_1.ipynb`, which contains explanations, code, and results related to the different tasks and components of the project.
 
+## Data Set
+
+The dataset used in this project can be downloaded from [here](http://ufldl.stanford.edu/housenumbers/). It is divided into a train and test set.
+
+
 ## Project Components
 
 The project is organized into several code files, each dedicated to one of the four tasks.
