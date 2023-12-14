@@ -283,3 +283,79 @@ def plot_sh_coeff(overview):
     plt.title('Silhouette Coefficient for individual classes')
 
     plt.show()
+
+
+def create_all_features(train_images, test_images):
+    '''
+    this function creates all the features from project 1, including raw pixel values, rgb_histogram, gray scaled images, lbp, hcd and orb
+    it returns a dictionary where all the features are stored
+    '''
+    # features raw pixel values
+    pixel_train_features = train_images.reshape(train_images.shape[0], -1)
+    pixel_test_features = test_images.reshape(test_images.shape[0], -1)
+    print('feature for raw pixels created')
+    # features 1: get rgb_histogram
+    rgb_train_images = rgb_histogram(train_images)
+    rgb_test_images = rgb_histogram(test_images)
+    rgb_train_features = create_vectors(rgb_train_images)
+    rgb_test_features = create_vectors(rgb_test_images)
+    print('feature 1 created')
+    # features 2:
+    gray_train_images = gray_reduced_images(train_images)
+    gray_test_images = gray_reduced_images(test_images)
+    gray_train_features = create_vectors(gray_train_images)
+    gray_test_features = create_vectors(gray_test_images)
+    print('feature 2 created')
+    # features 3
+    lbp_train_images = lbp(train_images, radius=4, n_points=16)
+    lbp_test_images = lbp(test_images, radius=4, n_points=16)
+    lbp_train_features = histogram(lbp_train_images, bins=64)
+    lbp_test_features = histogram(lbp_test_images, bins=64)
+    print('feature 3 created')
+    # features 4
+    hcd_train_images = hcd(train_images)
+    hcd_test_images = hcd(test_images)
+    hcd_train_features = histogram(hcd_train_images, bins=64)
+    hcd_test_features = histogram(hcd_test_images, bins=64)
+    print('feature 4 created')
+    # features 5
+    train_descriptors = orb_sift(train_images, method='orb') # I don't calculate SIFT Features here, but I implemented them already so I can use the code for task 4
+    test_descriptors = orb_sift(test_images, method='orb')
+    features = np.concatenate([inner_array for inner_array in train_descriptors if inner_array is not None])
+    n_clusters = 50
+    kmeans = KMeans(n_clusters, n_init=5)  # Number of clusters (visual words)
+    kmeans.fit(features)
+    orb_train_features = histogram_visual_words(kmeans, train_descriptors, bins=n_clusters)
+    orb_test_features = histogram_visual_words(kmeans, test_descriptors, bins=n_clusters)
+    print('feature 5 created')
+
+    features = {}
+
+    # Initialize inner dictionaries
+    features['raw_pixels'] = {}
+    features['rgb_histogram'] = {}
+    features['gray_scaled'] = {}
+    features['lbp'] = {}
+    features['hcd'] = {}
+    features['orb'] = {}
+
+    # Assign values to the inner dictionaries
+    features['raw_pixels']['train'] = pixel_train_features
+    features['raw_pixels']['test'] = pixel_test_features
+
+    features['rgb_histogram']['train'] = rgb_train_features
+    features['rgb_histogram']['test'] = rgb_test_features
+
+    features['gray_scaled']['train'] = gray_train_features
+    features['gray_scaled']['test'] = gray_test_features
+
+    features['lbp']['train'] = lbp_train_features
+    features['lbp']['test'] = lbp_test_features
+
+    features['hcd']['train'] = hcd_train_features
+    features['hcd']['test'] = hcd_test_features
+
+    features['orb']['train'] = orb_train_features
+    features['orb']['test'] = orb_test_features
+
+    return features
