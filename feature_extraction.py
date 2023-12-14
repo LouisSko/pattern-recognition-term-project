@@ -7,6 +7,8 @@ from sklearn.metrics import pairwise_distances
 from sklearn.model_selection import train_test_split
 import skimage.measure
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from utils import histogram, load_svhn_dataset, visualize_class_distr, plot_images, plot_transformed_images, Standardizer, create_vectors
 
 
 # technique 1
