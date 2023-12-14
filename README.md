@@ -29,10 +29,10 @@ The project report can be found in `project_2.ipynb`, which contains explanation
 
 ### Project Components
 
-The project is organized into several code files, each dedicated to one of the four tasks.
+The project is organized into several code files.
 
 - `random_forest.py`: This file contains code related to training, tuning and testing the decision tree and random forest.
 
-- `model.py`: This file contains code related to the architecture of the Vision Transformer.
+- `model.py`: This file contains code related to the architecture of the Vision Transformer. The code was adopted from this [repo](https://github.com/s-chh/PyTorch-Vision-Transformer-ViT-MNIST/blob/main/data_loader.py).
 
 - `solver.py`: This file contains code related to the training and testing of the Vision Transformer.
