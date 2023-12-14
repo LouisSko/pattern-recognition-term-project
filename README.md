@@ -31,7 +31,7 @@ The project report can be found in `project_2.ipynb`, which contains explanation
 
 The project is organized into several code files, each dedicated to one of the four tasks.
 
-- `random_forest.py`: This file contains code related to training and tuning and testing the decision tree and random forest
+- `random_forest.py`: This file contains code related to training, tuning and testing the decision tree and random forest.
 
 - `model.py`: This file contains code related to the architecture of the Vision Transformer.
 
