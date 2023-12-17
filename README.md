@@ -25,7 +25,7 @@ The project is organized into several code files, each dedicated to one of the f
 
 ## Phase 2
 
-The project report can be found in `project_2.ipynb`, which contains explanations, code, and results related to the different tasks and components of the project.
+The project report can be found in `project_2.ipynb`, which contains explanations, code, and results related to the different tasks and components of the project phase 2.
 
 ### Project Components
 
